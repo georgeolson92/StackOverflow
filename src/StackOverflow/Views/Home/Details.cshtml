@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System.Security.Claims
+
+@model StackOverflow.Models.Question
+
+<h2>Details</h2>
+<hr />
+<h1>@Html.DisplayFor(model => model.Title)</h1>
+<p>by @Html.DisplayFor(model => model.User.UserName)</p>
+<p>@Html.DisplayFor(model => model.Content)</p>
+<p>@Html.ActionLink("Back to list", "Index")</p>

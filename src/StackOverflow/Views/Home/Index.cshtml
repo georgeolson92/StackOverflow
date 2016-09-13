@@ -1,0 +1,35 @@
+﻿@{ 
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System.Security.Claims
+@model IEnumerable<StackOverflow.Models.Question>
+<h2>Stack Overflow</h2>
+<hr />
+    <h3>Questions:</h3>
+    
+       @if (Model.Any())
+       {
+        <ul>
+            @foreach (var listQuestion in Model)
+            {
+                <li>@Html.DisplayFor(modelQuestion => listQuestion.Title) - @Html.DisplayFor(modelQuestion => listQuestion.User.UserName)@Html.ActionLink("Details", "Details", new { id = listQuestion.Id })</li>
+            }
+        </ul>
+       }
+       else
+       {
+           <p>No questions.</p>
+
+       }
+
+@if (User.Identity.IsAuthenticated)
+{
+    <p>Hello @User.Identity.Name!</p>
+    <p>@Html.ActionLink("Your account", "Index", "Account")</p>
+}
+else
+{
+<p>@Html.ActionLink("Register", "Register")</p>
+<p>@Html.ActionLink("Log in", "Login", "Account")</p>
+}

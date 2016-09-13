@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System.Security.Claims
+@model IEnumerable <StackOverflow.Models.Question>
+
+<h2>Authentication with Identity</h2>
+<hr />
+@if (User.Identity.IsAuthenticated)
+{
+    <h3>Hello @User.Identity.Name!</h3>
+    <h4>Your Questions.</h4>
+    @if (Model.Any())
+    {
+        <ul>
+            @foreach (var QItem in Model)
+            {
+                <li>@Html.DisplayFor(modelItem => QItem.Title) - @Html.ActionLink("Details", "Details", "Home", new { id = QItem.Id } )</li>
+
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No Questions.</p>
+    }
+
+
+    @Html.ActionLink("Create new question", "Create", "QuestionList")
+
+    @using (Html.BeginForm("LogOff", "Account"))
+    {
+        <input type="submit" class="btn btn-default" value="Log out" />
+    }
+
+}
+else
+{
+    <p>@Html.ActionLink("Register", "Register")</p>
+    <p>@Html.ActionLink("Log in", "Login")</p>
+}
