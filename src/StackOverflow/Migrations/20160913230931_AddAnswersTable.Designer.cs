@@ -8,9 +8,10 @@ using StackOverflow.Models;
 namespace StackOverflow.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160913230931_AddAnswersTable")]
+    partial class AddAnswersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -130,13 +131,9 @@ namespace StackOverflow.Migrations
 
                     b.Property<string>("Content");
 
-                    b.Property<int?>("QuestionId");
-
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
 
                     b.HasIndex("UserId");
 
@@ -249,10 +246,6 @@ namespace StackOverflow.Migrations
 
             modelBuilder.Entity("StackOverflow.Models.Answer", b =>
                 {
-                    b.HasOne("StackOverflow.Models.Question", "Question")
-                        .WithMany("Answers")
-                        .HasForeignKey("QuestionId");
-
                     b.HasOne("StackOverflow.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");

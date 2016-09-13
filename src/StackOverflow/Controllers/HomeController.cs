@@ -21,7 +21,7 @@ namespace StackOverflow.Controllers
 
         public IActionResult Details(int id)
         {
-            var thisQuestion = db.Questions.Include(questions => questions.User).FirstOrDefault(questions => questions.Id == id);
+            var thisQuestion = db.Questions.Include(questions => questions.User).Include(questions => questions.Answers).FirstOrDefault(questions => questions.Id == id);
             return View(thisQuestion);
         }
     }

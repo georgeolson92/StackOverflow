@@ -11,4 +11,31 @@
 <h1>@Html.DisplayFor(model => model.Title)</h1>
 <p>by @Html.DisplayFor(model => model.User.UserName)</p>
 <p>@Html.DisplayFor(model => model.Content)</p>
+<hr />
+
+@if (Model.Answers.Any())
+{
+    <ul>
+        @foreach (var listAnswer in Model.Answers)
+        {
+            <li>"@Html.DisplayFor(modelQuestion => listAnswer.Content)" - @Html.DisplayFor(modelQuestion => listAnswer.User.UserName) </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No answers.</p>
+
+}
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.Title)
+    @Html.TextBoxFor(model => model.Title)
+
+    @Html.LabelFor(model => model.Content)
+    @Html.TextBoxFor(model => model.Content)
+
+    <input type="submit" value="Add new task" />
+}
 <p>@Html.ActionLink("Back to list", "Index")</p>
