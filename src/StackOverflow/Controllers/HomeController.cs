@@ -13,15 +13,28 @@ namespace StackOverflow.Controllers
 {
     public class HomeController : Controller
     {
-        private QuestionDbContext db = new QuestionDbContext();
+        private IQuestionRepository questionRepo;
+
+        public HomeController(IQuestionRepository thisRepo = null)
+        {
+            if (thisRepo == null)
+            {
+                this.questionRepo = new EFQuestionRepository();
+            }
+            else
+            {
+                this.questionRepo = thisRepo;
+            }
+        }
+
         public IActionResult Index()
         {
-            return View(db.Questions.Include(questions => questions.User).ToList());
+            return View(questionRepo.Questions.Include(questions => questions.User).ToList());
         }
 
         public IActionResult Details(int id)
         {
-            var thisQuestion = db.Questions.Include(questions => questions.User).Include(questions => questions.Answers).FirstOrDefault(questions => questions.Id == id);
+            var thisQuestion = questionRepo.Questions.Include(questions => questions.User).Include(questions => questions.Answers).FirstOrDefault(questions => questions.Id == id);
             return View(thisQuestion);
         }
     }
